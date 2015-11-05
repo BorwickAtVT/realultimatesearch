@@ -1,0 +1,8 @@
+rus-crawler:
+  build: ./rus-crawler
+  hostname: rus-crawler
+  volumes:
+    - "./rus-crawler-data:/data/.scrapy/httpcache"
+  external_links:
+    - rus-es:es
+  container_name: rus-crawler

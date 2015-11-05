@@ -1,0 +1,4 @@
+Flask
+elasticsearch
+elasticsearch_dsl
+gunicorn

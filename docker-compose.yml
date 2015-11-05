@@ -1,0 +1,22 @@
+rus-es:
+  build: ./rus-es
+  restart: always
+  hostname: rus-es
+  ports:
+    - "9200:9200"
+    - "9300:9300"
+  volumes:
+    - "./rus-es-data:/data"
+  container_name: rus-es
+
+rus-ui:
+  build: ./rus-ui
+  restart: always
+  hostname: rus-ui
+  ports:
+    - "8000:8000"
+  volumes:
+    - "./rus-ui-data:/data/logs"
+  links:
+    - rus-es:es
+  container_name: rus-ui

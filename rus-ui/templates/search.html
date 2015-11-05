@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+{% block content %}
+<p>
+<form method="GET" action="{{ url_for('search') }}">
+  <input type="text" name="q" value="{{ q if q != None }}">
+    <input type="submit">
+  </form>
+</p>
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<h3 id="toggle_operators" style="color: blue; font-style: italic;">Click for search help</h3>
+<div id="search_operators">
+  <pre>
++ signifies AND operation
+| signifies OR operation
+- negates a single token
+" wraps a number of tokens to signify a phrase for searching
+( and ) signify precedence
+  </pre>
+</div>
+
+{% if q %}
+  {% if results %}
+
+<p>
+  {% if prev_link %}
+  <a href="{{ prev_link }}">Prev</a>
+  {% endif %}
+
+  {% if next_link %}
+  <a href="{{ next_link }}">Next</a>
+  {% endif %}
+</p>
+
+  <p>Viewing results {{ offset + 1 }} through {{ window_offset }}
+  of {{ results.hits.total }}.</p>
+  
+  <ul>
+    {% for result in results %}
+      <li><a href="{{ result.url }}">{{ result.title or result.url }}</a>
+         <br><code>{{ result.url }}</code>
+	 <br><em>{{ result.excerpt }}</em>
+       </li>
+    {% endfor %}
+  </ul>
+
+  <p>
+    {% if prev_link %}
+  <a href="{{ prev_link }}">Prev</a>
+  {% endif %}
+
+  {% if next_link %}
+  <a href="{{ next_link }}">Next</a>
+  {% endif %}
+  </p>
+
+  {% else %}
+  <p><em>No results for '{{ q }}'.</em></p>
+  {% endif %}
+{% endif %}
+
+<script>
+  $(document).ready(function() {
+  $("#search_operators").hide();
+
+  $("#toggle_operators").click(function () {
+    $("#search_operators").toggle();
+   });
+});
+</script>
+{% endblock %}
