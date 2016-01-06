@@ -16,4 +16,3 @@ class RusItem(scrapy.Item):
     excerpt = scrapy.Field()
     url = scrapy.Field()
     fulltext = scrapy.Field()
-    netloc = scrapy.Field()

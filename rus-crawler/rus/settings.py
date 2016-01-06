@@ -93,3 +93,34 @@ ELASTICSEARCH_LOG_LEVEL= log.DEBUG
 # CLOSESPIDER_ERRORCOUNT = 1
 
 LOG_LEVEL = 'INFO'
+DOWNLOAD_WARNSIZE = ( 1024 ** 2 ) * 100
+
+
+# This code changes the `url` property to be `not_analyzed` which
+# allows later prefix search operations to work properly.
+# It would be nice if scrapy elastic search had a mechanism for setting this.
+
+from elasticsearch import Elasticsearch
+
+es = Elasticsearch('{}:{}'.format(ELASTICSEARCH_SERVER, ELASTICSEARCH_PORT))
+if not es.indices.exists(ELASTICSEARCH_INDEX):
+    es.indices.create(index=ELASTICSEARCH_INDEX,
+                      body="""
+{
+    "mappings": {
+	"items" : {
+	    "properties" : {
+		"url" : {
+		    "type": "string",
+		    "index": "not_analyzed"
+		      },
+		"contenttype" : {
+		    "type": "string",
+		    "index": "not_analyzed"
+		}
+	    }
+	}
+    }
+}
+                      """,
+                      )

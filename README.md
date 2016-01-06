@@ -19,6 +19,10 @@ the correct settings for your environment.
 
 ### Part 1: Data store and UI ###
 
+First, set the URL for where to serve static files:
+
+    echo "STATIC_URL=http://example.com/rus/" > ./static.env
+
 The main docker-compose config file creates two containers: one for
 Elasticsearch, and another as a gunicorn+flask web UI. All this can be
 started like so:

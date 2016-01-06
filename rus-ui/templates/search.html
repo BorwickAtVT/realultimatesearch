@@ -2,9 +2,17 @@
 {% block content %}
 <p>
 <form method="GET" action="{{ url_for('search') }}">
-  <input type="text" name="q" value="{{ q if q != None }}">
-    <input type="submit">
-  </form>
+<input type="text" name="q" value="{{ q if q != None }}"></input>
+<select name="site">
+<option value="">All sites</option>
+ {% for site in sites %}
+ <option value="{{ site.pk }}" {% if site == cur_site %}SELECTED{% endif %}
+   >{{ site.name }}</option>
+ {% endfor %}
+    </select>
+<input type="submit">
+</form>
+
 </p>
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <h3 id="toggle_operators" style="color: blue; font-style: italic;">Click for search help</h3>

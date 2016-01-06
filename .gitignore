@@ -1,2 +1,4 @@
 *.pyc
 .venv
+static.env
+.dir-locals.el

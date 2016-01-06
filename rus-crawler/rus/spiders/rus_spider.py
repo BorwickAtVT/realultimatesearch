@@ -89,8 +89,7 @@ class RusSpider(CrawlSpider):
     def parse_item(self, response):
         item = RusItem()
         item['url'] = response.url
-        item['netloc'] = urlparse(response.url).netloc
-        item['contenttype'] = response.headers['Content-type']
+        item['contenttype'] = response.headers['Content-type'].split(';')[0]
         item['title'] = u''.join(response.xpath('//title/text()').extract())
         all_text = u' '.join(response.xpath('//body//*[not(self::script)]//text()').extract())
         all_text = WHITESPACE_RE.sub(' ', all_text)
@@ -125,7 +124,6 @@ class RusSpider(CrawlSpider):
             
             item = RusItem()
             item['url'] = response.url
-            item['netloc'] = urlparse(response.url).netloc
 
             item['contenttype'] = response.headers['Content-type']
             item['fulltext'] = all_text

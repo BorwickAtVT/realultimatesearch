@@ -19,4 +19,6 @@ rus-ui:
     - "./rus-ui-data:/data/logs"
   links:
     - rus-es:es
+  env_file:
+    - ./static.env
   container_name: rus-ui
