@@ -1,3 +1,4 @@
 elasticsearch
 ScrapyElasticSearch
 textract
+elasticsearch_dsl

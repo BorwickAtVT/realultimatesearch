@@ -1,4 +1,4 @@
-FROM phusion/baseimage:0.9.17
+FROM phusion/baseimage:0.9.18
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -18,4 +18,4 @@ VOLUME /data/.scrapy/httpcache
 WORKDIR /data
 RUN pip -q install -r requirements.txt
 
-CMD ["/usr/local/bin/scrapy","crawl","rus"]
+CMD ["/usr/local/bin/scrapy","crawl","rus","-s","JOBDIR=/data/crawljob"]

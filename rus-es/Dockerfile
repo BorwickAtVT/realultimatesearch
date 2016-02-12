@@ -1,4 +1,4 @@
-FROM phusion/baseimage:0.9.17
+FROM phusion/baseimage:0.9.18
 
 # Set install version
 ENV DEBIAN_FRONTEND noninteractive
@@ -24,7 +24,7 @@ RUN \
  mv /$ES_PKG_NAME /elasticsearch
 
 # Plugins
-RUN /elasticsearch/bin/plugin -i elastic/sense
+# RUN /elasticsearch/bin/plugin -i elastic/sense
 
 # Config
 ADD elasticsearch.yml /elasticsearch/config/elasticsearch.yml
@@ -32,6 +32,10 @@ ADD elasticsearch.yml /elasticsearch/config/elasticsearch.yml
 # Expose ports
 EXPOSE 9200
 EXPOSE 9300
+
+RUN adduser --disabled-password --gecos '' es
+RUN chown -R es:es /elasticsearch
+USER es
 
 # Default command
 CMD ["/elasticsearch/bin/elasticsearch"]

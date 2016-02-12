@@ -1,4 +1,4 @@
-FROM phusion/baseimage:0.9.17
+FROM phusion/baseimage:0.9.18
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -8,6 +8,7 @@ RUN apt-get update -qq && \
 
 ADD requirements.txt ui.py gunicorn.py.ini /data/
 ADD templates /data/templates/
+ADD static /data/static/
 
 WORKDIR /data
 RUN pip -q install -r requirements.txt

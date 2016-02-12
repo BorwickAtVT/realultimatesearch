@@ -56,6 +56,7 @@ EXTENSIONS = {
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     'scrapyelasticsearch.scrapyelasticsearch.ElasticSearchPipeline',
+    'rus.pipelines.BareURLChecksumPipeline',
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -69,14 +70,12 @@ ITEM_PIPELINES = {
 # Enable showing throttling stats for every response received:
 #AUTOTHROTTLE_DEBUG=False
 
-# Enable and configure HTTP caching (disabled by default)
-# See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
-HTTPCACHE_ENABLED=True
-HTTPCACHE_EXPIRATION_SECS=0
-HTTPCACHE_DIR='httpcache'
-HTTPCACHE_IGNORE_HTTP_CODES=[]
-HTTPCACHE_STORAGE='scrapy.extensions.httpcache.FilesystemCacheStorage'
-HTTPCACHE_GZIP=True
+# Enable and configure HTTP caching (disabled by default) See
+# http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
+# HTTPCACHE_ENABLED=True HTTPCACHE_EXPIRATION_SECS=0
+# HTTPCACHE_DIR='httpcache' HTTPCACHE_IGNORE_HTTP_CODES=[]
+# HTTPCACHE_STORAGE='scrapy.extensions.httpcache.FilesystemCacheStorage'
+# HTTPCACHE_GZIP=True
 
 from scrapy import log
 import os
@@ -111,6 +110,14 @@ if not es.indices.exists(ELASTICSEARCH_INDEX):
 	"items" : {
 	    "properties" : {
 		"url" : {
+		    "type": "string",
+		    "index": "not_analyzed"
+		      },
+		"bare_url" : {
+		    "type": "string",
+		    "index": "not_analyzed"
+		      },
+		"checksum" : {
 		    "type": "string",
 		    "index": "not_analyzed"
 		      },
